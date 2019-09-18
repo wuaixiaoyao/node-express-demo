@@ -1,14 +1,16 @@
-var express = require('express');
-var app = express();
-var fs = require("fs");
-var bodyParser = require('body-parser');
-var multer = require('multer');
+let express = require('express');
+let compression = require('compression')
+let path = require('path')
+let app = express();
+let chalk = require("chalk");
+let fs = require("fs");
+let bodyParser = require('body-parser');
+let multer = require('multer');
+//nodemon  node 热更新
+let cookieParser = require('cookie-parser')
+let util = require('util');
+app.use(compression())
 
-var cookieParser = require('cookie-parser')
-var util = require('util');
-
- 
-app.use('/public', express.static('public'));
 app.use(bodyParser.urlencoded({
   extended: false
 }));
@@ -17,22 +19,26 @@ app.use(multer({
 }).array('image'));
 app.use(cookieParser())
 
-
-app.get('/index.htm', function (req, res) {
-  res.sendFile(__dirname + "/" + "index.htm");
-})
+// static 托管静态文件
+app.use(express.static(path.join(__dirname, 'public')))
 
 //--------登录注册
 app.post('/process_get', function (req, res) {
 
   // 输出 JSON 格式
   let body = req.body;
-  var response = {
+  let response = {
     "first_name": body.first_name,
     "last_name": body.last_name
   };
   console.log("response", response);
-  res.end(JSON.stringify(response));
+  res.set({
+    "content-type":"application:json"
+  }).end(JSON.stringify({
+    code:0,
+    message:"",
+    data:response}));
+  // res.download('./fileList/20190521000022.pdf')
 })
 
 
@@ -41,7 +47,7 @@ app.post('/file_upload', function (req, res) {
 
   console.log("files[0]", req.files[0]); // 上传的文件信息
 
-  var des_file = __dirname + "/fileList/" + req.files[0].originalname;
+  let des_file = __dirname + "/fileList/" + req.files[0].originalname;
   fs.readFile(req.files[0].path, function (err, data) {
     fs.writeFile(des_file, data, function (err) {
       if (err) {
@@ -69,11 +75,11 @@ app.get('/listUsers', function (req, res) {
 })
 
 
-var server = app.listen(8888, function () {
+let server = app.listen(5678, function () {
 
-  var host = server.address().address
-  var port = server.address().port
+  let host = server.address().address
+  let port = server.address().port
 
-  console.log("应用实例，访问地址为 http://%s:%s", host, port)
+  console.log("应用实例，访问地址为 http://%s:%s", host, `${chalk.green(port)}`)
 
 })

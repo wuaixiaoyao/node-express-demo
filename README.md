@@ -4,6 +4,3 @@
   yarn 
   node sever.js
 ```
-git commit -m "first commit"
-git remote add origin https://github.com/wuaixiaoyao/node-express-demo.git
-git push -u origin master
