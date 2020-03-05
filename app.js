@@ -13,6 +13,8 @@ let util = require('util');
 let mysql = require('mysql');
 let db = require('./db/db');
 let userSql = require('./sql/userSql')
+
+//todo; 添加ejs 模板引擎
 app.use(compression())
 
 app.use(bodyParser.urlencoded({
