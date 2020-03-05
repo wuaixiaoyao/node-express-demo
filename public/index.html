@@ -1,0 +1,80 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>my express demo</title>
+</head>
+<body>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+     <div class="post-login">
+        <form  onsubmit="login" method = 'post' action="/process_get">
+          账号: <input type="text" name="name" id='name'>  <br>
+            密码: <input type="text" name="pwd" id = 'pwd'>
+          <input type="submit" value="Submit">
+        </form>
+     </div>
+     <div>
+        <h3>文件上传：</h3>
+        选择一个文件上传: <br />
+        <form action="http://localhost:5678/file_upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" size="50" />
+        <br />
+        <input type="submit" value="上传文件" />
+        </form>
+     </div>
+     <h3>
+        <button onClick = 'getList()'>
+          查看用户
+        </button>
+      </h3>
+      <div class="user-list">
+
+      </div>
+  
+</body>
+
+<script>
+  function login() {
+    var name = document.getElementById('name')
+    var pwd = document.getElementById('pwd')
+    let params = {
+      first_name:name,
+      last_name:pwd
+    }
+    console.log(JSON.stringify(params),'params')
+    $.ajax({
+      url:"/process_get",
+      method:"post",
+      data:JSON.stringify(params),
+      dataType:"json",
+      success:function(){
+        console.log('success')
+      }
+    })
+    return false
+  }
+  function getList(){
+    $.ajax({
+      url:'/listUsers',
+      method:'get',
+      success: function(res) {
+          var wrapper = document.getElementsByClassName('user-list')[0];
+           let {code,data} = res;
+          if(code === 0 && data){
+            data = JSON.parse(data);            
+            Object.keys(data).forEach(key => {
+              var h5 = document.createElement('h5');
+              let name = data[key].admDisplayName;
+              h5.innerHTML = name;  
+              wrapper.appendChild(h5)
+            })
+          }
+      },
+      error:function(){
+
+      }  
+    })
+  }
+</script>
+</html>

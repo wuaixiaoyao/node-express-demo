@@ -1,20 +1,162 @@
-{
-   "user1" : {
-      "name" : "mahesh",
-      "password" : "password1",
-      "profession" : "teacher",
-      "id": 1
-   },
-   "user2" : {
-      "name" : "suresh",
-      "password" : "password2",
-      "profession" : "librarian",
-      "id": 2
-   },
-   "user3" : {
-      "name" : "ramesh",
-      "password" : "password3",
-      "profession" : "clerk",
-      "id": 3
-   }
-}
+[
+  {
+      "admDisplayName": "我是一个上级渠道",
+      "admId": "1174213219972022272",
+      "admIsPwdExpired": 1,
+      "admLoginName": "18686868686",
+      "admPassword": "",
+      "admRemark": "",
+      "admStatus": 0,
+      "createdBy": "我是一个上级渠道",
+      "gmtCreate": "2019-09-18 14:47:02",
+      "gmtModified": null,
+      "isDefault": 0,
+      "roleNames": [
+          "投资顾问"
+      ]
+  },
+  {
+      "admDisplayName": "哈哈哈哈哈",
+      "admId": "1174211579718139904",
+      "admIsPwdExpired": 1,
+      "admLoginName": "18610354853",
+      "admPassword": "",
+      "admRemark": "",
+      "admStatus": 0,
+      "createdBy": "哈哈哈哈哈",
+      "gmtCreate": "2019-09-18 14:40:31",
+      "gmtModified": null,
+      "isDefault": 0,
+      "roleNames": [
+          "投资顾问"
+      ]
+  },
+  {
+      "admDisplayName": "业务员-YZP",
+      "admId": "1174206548478525440",
+      "admIsPwdExpired": 1,
+      "admLoginName": "18940001110",
+      "admPassword": "",
+      "admRemark": "",
+      "admStatus": 0,
+      "createdBy": "业务员-YZP",
+      "gmtCreate": "2019-09-18 14:20:31",
+      "gmtModified": null,
+      "isDefault": 0,
+      "roleNames": [
+          "渠道经理"
+      ]
+  },
+  {
+      "admDisplayName": "管理员233",
+      "admId": "1174154401258930176",
+      "admIsPwdExpired": 0,
+      "admLoginName": "13854555555",
+      "admPassword": "",
+      "admRemark": "",
+      "admStatus": 0,
+      "createdBy": "",
+      "gmtCreate": "2019-09-18 10:53:18",
+      "gmtModified": null,
+      "isDefault": 1,
+      "roleNames": [
+          "超级管理员"
+      ]
+  },
+  {
+      "admDisplayName": "无上级渠道公司",
+      "admId": "1174151019903320064",
+      "admIsPwdExpired": 1,
+      "admLoginName": "13728633222",
+      "admPassword": "",
+      "admRemark": "",
+      "admStatus": 0,
+      "createdBy": "无上级渠道公司",
+      "gmtCreate": "2019-09-18 10:39:52",
+      "gmtModified": null,
+      "isDefault": 0,
+      "roleNames": [
+          "投资顾问"
+      ]
+  },
+  {
+      "admDisplayName": "渠道经理账号",
+      "admId": "1174144601414434816",
+      "admIsPwdExpired": 1,
+      "admLoginName": "17644444444",
+      "admPassword": "",
+      "admRemark": "",
+      "admStatus": 0,
+      "createdBy": "渠道经理账号",
+      "gmtCreate": "2019-09-18 10:14:22",
+      "gmtModified": null,
+      "isDefault": 0,
+      "roleNames": [
+          "渠道经理"
+      ]
+  },
+  {
+      "admDisplayName": "测试审核",
+      "admId": "1174140646680690688",
+      "admIsPwdExpired": 1,
+      "admLoginName": "15989567088",
+      "admPassword": "",
+      "admRemark": "",
+      "admStatus": 0,
+      "createdBy": "测试审核",
+      "gmtCreate": "2019-09-18 09:58:39",
+      "gmtModified": null,
+      "isDefault": 0,
+      "roleNames": [
+          "投资顾问"
+      ]
+  },
+  {
+      "admDisplayName": "陈CEO",
+      "admId": "1174136950097969152",
+      "admIsPwdExpired": 0,
+      "admLoginName": "18620354898",
+      "admPassword": "",
+      "admRemark": "",
+      "admStatus": 0,
+      "createdBy": "陈CEO",
+      "gmtCreate": "2019-09-18 09:43:57",
+      "gmtModified": null,
+      "isDefault": 1,
+      "roleNames": [
+          "超级管理员"
+      ]
+  },
+  {
+      "admDisplayName": "陈先生",
+      "admId": "1174136030488428544",
+      "admIsPwdExpired": 0,
+      "admLoginName": "18620354888",
+      "admPassword": "",
+      "admRemark": "",
+      "admStatus": 0,
+      "createdBy": "",
+      "gmtCreate": "2019-09-18 09:40:18",
+      "gmtModified": null,
+      "isDefault": 1,
+      "roleNames": [
+          "超级管理员"
+      ]
+  },
+  {
+      "admDisplayName": "个人没上级",
+      "admId": "1174133574262063104",
+      "admIsPwdExpired": 1,
+      "admLoginName": "15989521199",
+      "admPassword": "",
+      "admRemark": "",
+      "admStatus": 0,
+      "createdBy": "个人没上级",
+      "gmtCreate": "2019-09-18 09:30:33",
+      "gmtModified": null,
+      "isDefault": 0,
+      "roleNames": [
+          "投资顾问"
+      ]
+  }
+]
