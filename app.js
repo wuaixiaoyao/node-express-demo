@@ -44,7 +44,7 @@ app.all('*', function (req, res, next) {
 });
 
 
-//--------登录注册
+//-------- 登录注册 -----------
 router.post('/process_get', function (req, res) {
   // 输出 JSON 格式
   let body = req.body;
@@ -55,31 +55,27 @@ router.post('/process_get', function (req, res) {
   let sqlString = 'INSERT INTO user SET ?';
   let connection = db.connection();
   //校验唯一性
-  db.get(connection,userSql.getUserByName,body.name,(userList) => {
-    console.log(userList,'list')
-    if(!userList.length){//不存在
+  db.get(connection, userSql.getUserByName, body.name, (userList) => {
+    console.log(userList, 'list')
+    if (!userList.length) { //不存在
       db.insert(connection, sqlString, project, function (id) {
-      res.set({
+        res.set({
           "content-type": "application/json;charset=utf-8"
-        }).json(
-          {
+        }).json({
           code: 0,
           message: "注册成功",
           data: project
-        }
-        );
+        });
       });
 
-    }else{
+    } else {
       res.set({
         "content-type": "application/json;charset=utf-8"
-      }).json(
-        {
-          code: 0,
-          message: "已注册",
-          data: null
-        }
-      );
+      }).json({
+        code: 0,
+        message: "已注册",
+        data: null
+      });
     }
     db.close(connection)
   })
@@ -92,11 +88,12 @@ router.post('/process_get', function (req, res) {
 router.post('/file_upload', function (req, res) {
   console.log("-------------------files[0]--------------", req.body); // 上传的文件信息
   console.log(`已存在此文件${fs.existsSync(req.files[0].originalname)}`);
-  if(fs.existsSync(req.files[0].originalname)){
+  if (fs.existsSync(req.files[0].originalname)) {
     console.log(`${req.files[0].originalname}已存在`);
     return
   }
   let des_file = __dirname + "/fileList/" + req.files[0].originalname;
+  console.log('__dirname', __dirname)
   fs.readFile(req.files[0].path, function (err, data) {
     fs.writeFile(des_file, 'utf8', data, function (err) {
       if (err) {
@@ -115,12 +112,45 @@ router.post('/file_upload', function (req, res) {
 })
 
 router.get('/listUsers', function (req, res) {
-
-
+  let connection = db.connection();
+  //校验唯一性
+  db.get(connection, userSql.queryAll, {}, (userList) => {
+    console.log('list', userList)
+    res.set({}).json({
+      code: 0,
+      message: "success",
+      data: userList
+    });
+    db.close(connection)
+  })
 })
 
 router.get('/listUsersJson', function (req, res) {
   let dataUri = __dirname + "/data" + "/users.json";
+  function asyncFake(data, callback) {
+    if (data === 'foo') callback(true);
+    else callback(false);
+  }
+
+  asyncFake('bar', function (result) {
+    // this callback is actually called synchronously!
+    console.log('result 同步', result)
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('promise then')
+        console.log('resovle 后的打印')
+      }, 0)
+    }).then(res => {
+      console.log('promise  result 异步', res)
+    })
+    process.nextTick(() => {
+      console.log('nextTick result 异步', result)
+    })
+    // nextTick 先于 promise 执行
+  });
+  console.log(chalk.green('test 执行'))
+  
+
   fs.readFile(dataUri, 'utf8', function (err, data) {
     console.log(dataUri, data);
     res.send(JSON.stringify({
@@ -128,6 +158,7 @@ router.get('/listUsersJson', function (req, res) {
       message: "OK",
       data: data
     }));
+    // compute();
   });
 
 })
@@ -139,3 +170,8 @@ let server = app.listen(5678, function () {
   console.log("应用实例，访问地址为 http://%s:%s", host, `${chalk.green(port)}`)
 
 })
+const compute = () => {
+  console.error('nextTick 后执行');
+  process.nextTick(compute)
+}
+// compute();

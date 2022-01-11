@@ -1,8 +1,8 @@
 var mysql = {
-  host: 'localhost',
+  host: '152.136.221.155',
   user: 'root',
-  password: 'root',
-  database: 'user',
-  port: 8889
+  password: '123456',
+  database: 'sys',
+  port: 3306
 };
 module.exports = mysql;
