@@ -8,3 +8,6 @@
 ```bash
    node sever.js 
 ```
+### TODO
+
+- [x] pm2 进程守护

@@ -65,7 +65,7 @@ router.post('/process_get', function (req, res) {
           code: 0,
           message: "注册成功",
           data: project
-        });
+        }).end();
       });
 
     } else {
@@ -75,7 +75,7 @@ router.post('/process_get', function (req, res) {
         code: 0,
         message: "已注册",
         data: null
-      });
+      }).end();
     }
     db.close(connection)
   })
