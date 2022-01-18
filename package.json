@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "deploy": "pm2 start pm2.conf.json"
   },
   "dependencies": {
     "chalk": "^2.4.2",
