@@ -1,0 +1,21 @@
+FROM evolut-admin-web-dev:base
+
+ENV NODE_ENV production
+
+ENV HOST 0.0.0.0
+
+ENV PORT 3000
+
+ENV API_BASE http://10.250.100.68:7007
+
+ENV UPLOAD_BASE http://10.250.100.68:7001
+
+COPY . /root/project
+
+WORKDIR /root/project
+
+RUN ["yarn", "run", "build"]
+
+EXPOSE 3000
+
+CMD ["yarn", "run", "deploy"]

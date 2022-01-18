@@ -1,0 +1,11 @@
+FROM node:8.12.0
+
+COPY . /root/project
+
+WORKDIR /root/project
+
+RUN yarn
+
+EXPOSE 3000
+
+CMD ["yarn", "run", "start"]
