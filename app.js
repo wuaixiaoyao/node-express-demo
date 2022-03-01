@@ -38,61 +38,89 @@ app.get("/index.html", function (req, res) {
   res.sendFile(__dirname + "/" + "index.html");
 });
 
-//设置允许跨域请求
-app.all("*", function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*"); //访问控制允许来源：所有
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  ); //访问控制允许报头 X-Requested-With: xhr请求
-  res.header("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS"); //访问控制允许方法
-  res.header("X-Powered-By", "nodejs"); //自定义头信息，表示服务端用nodejs
-  res.header("Content-Type", "application/json;charset=utf-8");
-  next();
-});
+// //设置允许跨域请求
+// app.all('*', function (req, res, next) {
+//   res.header('Access-Control-Allow-Origin', '*'); //访问控制允许来源：所有
+//   res.header('Access-Control-Allow-Headers', '*'); //访问控制允许报头 X-Requested-With: xhr请求
+//   res.header('Access-Control-Allow-Methods', '*'); //访问控制允许方法
+//   // res.header('X-Powered-By', 'nodejs'); //自定义头信息，表示服务端用nodejs
+//   res.header('Content-Type', 'application/json; charset=utf-8');
+//   next();
+// });
+
+// CORS & Preflight request
+app.use((req, res, next) => {
+  if (req.path !== '/' && !req.path.includes('.')) {
+    res.set({
+      'Access-Control-Allow-Credentials': true,
+      'Access-Control-Allow-Origin': req.headers.origin || '*',
+      'Access-Control-Allow-Headers': 'X-Requested-With,Content-Type',
+      'Access-Control-Allow-Methods': 'PUT,POST,GET,DELETE,OPTIONS',
+      'Content-Type': 'application/json; charset=utf-8'
+    })
+  }
+  //只需要返回是否成功的情况下，可以用状态码204来作为返回信息，e.g. (HTTP/1.1 204 No Content) 从而省略多余的数据传输
+  req.method === 'OPTIONS' ? res.status(204).end() : next()
+})
 
 //-------- 登录注册 -----------
-router.post("/process_get", function (req, res) {
+router.post('/process_get', function (req, res) {
+
   // 输出 JSON 格式
   let body = req.body;
+  console.log(body);
   let project = {
     user: body.name,
     pwd: body.pwd,
   };
-  let sqlString = "INSERT INTO user SET ?";
+  if(!Object.keys(req.body).length){
+    return res.set({
+      status: 500
+    }).json({
+      code: 0,
+      message: "error",
+      data: null
+    });
+  }
+  let sqlString = 'INSERT INTO user SET ?';
   let connection = db.connection();
   //校验唯一性
-  db.get(connection, userSql.getUserByName, body.name, (userList) => {
-    console.log(userList, "list");
-    if (!userList.length) {
-      //不存在
-      db.insert(connection, sqlString, project, function (id) {
-        res
-          .set({
-            "content-type": "application/json;charset=utf-8",
-          })
-          .json({
+  try {
+    db.get(connection, userSql.getUserByName, body.name, (userList) => {
+      console.log(userList, 'list')
+      if (!userList.length) { //不存在
+        db.insert(connection, sqlString, project, function (id) {
+          res.set({
+            "content-type": "application/json;charset=utf-8"
+          }).json({
             code: 0,
             message: "注册成功",
-            data: project,
-          })
-          .end();
-      });
-    } else {
-      res
-        .set({
-          "content-type": "application/json;charset=utf-8",
-        })
-        .json({
+            data: project
+          }).end();
+        });
+  
+      } else {
+        res.set({
+          "content-type": "application/json;charset=utf-8"
+        }).json({
           code: 0,
           message: "已注册",
-          data: null,
-        })
-        .end();
-    }
-    db.close(connection);
-  });
-});
+          data: null
+        }).end();
+      }
+      db.close(connection)
+    })
+  } catch (error) {
+    res.set({
+      status: 500
+    }).json({
+      code: 0,
+      message: "success",
+      data: userList
+    });
+  }
+})
+
 
 //上传文件
 router.post("/file_upload", function (req, res) {
